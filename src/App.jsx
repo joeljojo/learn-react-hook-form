@@ -1,9 +1,16 @@
 import { useForm } from "react-hook-form";
 
 function App() {
-  const { handleSubmit, register } = useForm();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+    reset,
+  } = useForm(); // You can set default Values using defaultValues object on the useForm()
   const onSubmit = (data) => {
     console.log(data);
+    // Reset the form after submitting
+    reset();
   };
   return (
     <div className=" bg-gray-500 rounded-md w-1/2 border border-gray-700 mx-auto mt-8 p-4">
@@ -23,11 +30,12 @@ function App() {
           <input
             className=" w-full p-2 border border-gray-400 rounded-sm"
             type="text"
-            name="first-name"
-            {...register("first-name")}
+            name="firstName"
+            {...register("firstName", { required: "This field is required" })}
           />
+          <p className=" text-red-400">{errors.firstName?.message}</p>
         </div>
-        <div className="flex flex-col">
+        <div className="mb-4">
           <label
             className="block font-bold mb-2 text-white"
             htmlFor="last-name"
@@ -37,11 +45,12 @@ function App() {
           <input
             className="w-full p-2 border border-gray-400 rounded-sm"
             type="text"
-            name="last-name"
-            {...register("last-name")}
+            name="lastName"
+            {...register("lastName", { required: "This field is required" })}
           />
+          <p className=" text-red-400">{errors.lastName?.message}</p>
         </div>
-        <div className="flex flex-col">
+        <div className="mb-4">
           <label className="block font-bold mb-2 text-white" htmlFor="email">
             Email Address:
           </label>
@@ -49,10 +58,11 @@ function App() {
             className="w-full p-2 border border-gray-400 rounded-sm"
             type="email"
             name="email"
-            {...register("email")}
+            {...register("email", { required: "This field is required" })}
           />
+          <p className=" text-red-400">{errors.email?.message}</p>
         </div>
-        <div className="flex flex-col">
+        <div className="mb-4">
           <label className="block font-bold mb-2 text-white" htmlFor="password">
             Password:
           </label>
@@ -60,8 +70,15 @@ function App() {
             className="w-full p-2 border border-gray-400 rounded-sm"
             type="password"
             name="password"
-            {...register("password")}
+            {...register("password", {
+              required: "This field is required",
+              minLength: {
+                value: 6,
+                message: "Password must be at least 6 characters",
+              },
+            })}
           />
+          <p className=" text-red-400">{errors.password?.message}</p>
         </div>
         <div className=" mt-2 mb-2 text-white">
           <input type="checkbox" name="male" id="male" /> Male
