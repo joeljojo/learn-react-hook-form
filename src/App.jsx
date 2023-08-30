@@ -7,11 +7,13 @@ function App() {
     formState: { errors },
     reset,
   } = useForm(); // You can set default Values using defaultValues object on the useForm()
+
   const onSubmit = (data) => {
     console.log(data);
     // Reset the form after submitting
     reset();
   };
+
   return (
     <div className=" bg-gray-500 rounded-md w-1/2 border border-gray-700 mx-auto mt-8 p-4">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -80,11 +82,17 @@ function App() {
           />
           <p className=" text-red-400">{errors.password?.message}</p>
         </div>
-        <div className=" mt-2 mb-2 text-white">
-          <input type="checkbox" name="male" id="male" /> Male
+        <div className=" mb-4">
+          <p>Do you agree to terms and conditions?</p>
         </div>
-        <div className=" mt-2 mb-2 text-white">
-          <input type="checkbox" name="female" id="female" /> Female
+        <div className=" mt-2 mb-4 text-white">
+          <input
+            type="checkbox"
+            name="terms"
+            id="terms"
+            {...register("terms")}
+          />
+          Yes
         </div>
         <div className=" mt-2 mb-2">
           <button
